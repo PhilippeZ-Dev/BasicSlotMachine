@@ -10,13 +10,16 @@ export class Game
     bandCount = 5;
     bandLength = this.band1.length;
     bandPositions = [0,0,0,0,0];
-    gameResults = this.GetResults();
+    get gameResults ()
+    {
+        return this.GetResults();
+    }
 
     RandomizeBands():void
     {
         for (let i = 0; i < this.bandPositions.length; i++) 
         {
-            this.bandPositions[i] = Math.floor(Math.random() * (this.bandLength + 1));
+            this.bandPositions[i] = Math.floor(Math.random() * (this.bandLength));
         }
     }
 

@@ -31,38 +31,32 @@ const backgroundColor = "rgb(100, 100, 100)";
         const buttonSprite = new pixi.Sprite(buttonTexture);
         const startButton = new StartButton(buttonSprite, width*0.5, height*0.7);
         
+        // Button Onclick
         startButton.button.on('pointerdown', () =>
             {
-                startButton.OnClick();
                 game.RandomizeBands();
-                console.log(game.bandPositions);
-                console.log(game.gameResults);
+                console.log('band positions: ', game.bandPositions);
+                console.log('game results: ', game.gameResults);
+                text.text = game.gameResults;
             }
         );
         app.stage.addChild(startButton.button);
         //
 
-
-        // create reels
-        // display textures
-
-        /* adding text for testing */
-        /*
         const text = new pixi.Text(
             {
-                text: '2',
+                text: '_',
                 style: {
-                    fill: "rgb(256,256,256)",
-                    fontSize: 20
+                    fill: "rgb(0,0,0)",
+                    fontSize: 40
                 } 
             }
         );
-        text.x = width/7 * 2;
-        text.y = height/5 * 2;
-        */
+        text.anchor.set(.5);
+        text.x = width*.5;
+        text.y = height*.85;
         
-        // add things to the screen
-        //app.stage.addChild(text);
+        app.stage.addChild(text);
     }
 )
 ();
