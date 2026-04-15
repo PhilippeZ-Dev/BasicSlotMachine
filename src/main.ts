@@ -2,9 +2,11 @@ import * as pixi from 'pixi.js';
 import { StartButton } from './StartButton';
 import { Game } from './Game';
 import { AssetLoader } from './AssetLoader';
+import { Reel } from './Reel';
 
-const width = 800;
-const height = 600;
+const width = 1280;
+const height = 720
+0;
 const backgroundColor = "rgb(100, 100, 100)";
 
 (async()=> 
@@ -60,15 +62,35 @@ const backgroundColor = "rgb(100, 100, 100)";
 
         // #region Reels Container
         const container = new pixi.Container();
-        container.x = 100;
-        container.y = 50;
+        container.x = 250;
+        container.y = 100;
+        
         app.stage.addChild(container);
+
+        const reels:Reel[] = [];
+        let reelCount = 5;
+        for(let i = 0; i < reelCount; i++) 
+        {
+            let reel = new Reel((container.x + Reel.margin_x * i), (container.y));
+            reels.push(reel);
+            
+            for(let j = 0; j < reel.sprites.length; j++)
+            {
+                let sprite = reel.sprites[j];
+                sprite = new pixi.Sprite(textures[0]);
+                sprite.scale = .4;
+                sprite.x = reel.position_x;
+                sprite.y = reel.position_y + Reel.margin_y * j;
+                app.stage.addChild(sprite);
+            }
+
+        }
         // #endregion
 
         // #region Button
         const buttonTexture = textures[textures.length-1];
         const buttonSprite = new pixi.Sprite(buttonTexture);
-        const startButton = new StartButton(buttonSprite, width*0.5, height*0.7);
+        const startButton = new StartButton(buttonSprite, width*0.5, height*0.75);
         
         // Button Onclick
         startButton.button.on('pointerdown', () =>
@@ -95,7 +117,7 @@ const backgroundColor = "rgb(100, 100, 100)";
         );
         text.anchor.set(.5);
         text.x = width*.5;
-        text.y = height*.85;
+        text.y = height*.9;
         
         app.stage.addChild(text);
         // #endregion
