@@ -1,6 +1,7 @@
 import * as pixi from 'pixi.js';
 import { StartButton } from './StartButton';
 import { Game } from './Game';
+import { AssetLoader } from './AssetLoader';
 
 const width = 800;
 const height = 600;
@@ -20,6 +21,7 @@ const backgroundColor = "rgb(100, 100, 100)";
         document.body.appendChild(app.canvas);
         // #endregion
 
+        // #region asset loading
         const loadingText = new pixi.Text(
             {
                 text: '0%',
@@ -36,7 +38,6 @@ const backgroundColor = "rgb(100, 100, 100)";
 
         app.stage.addChild(loadingText);
 
-        // #region asset laoding
         // list of assets
         const assetPaths:string[] = 
         [
@@ -51,16 +52,7 @@ const backgroundColor = "rgb(100, 100, 100)";
             'assets/spin_button.png'
         ]
 
-        const textures:pixi.Texture[] = [];
-
-        // async loading
-        for(let i=0; i<assetPaths.length; i++)
-        {
-            const tex = await pixi.Assets.load(assetPaths[i]);
-            textures.push(tex);
-            const percent = Math.round(((i + 1) / assetPaths.length) * 100);
-            loadingText.text = `${percent}%`;
-        }
+        const textures:pixi.Texture[] = await AssetLoader.Load(assetPaths, loadingText);
         // #endregion
 
  ////////////////////////////////////////////////////       
