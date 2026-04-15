@@ -87,6 +87,21 @@ const backgroundColor = "rgb(100, 100, 100)";
         }
         // #endregion
 
+        // #region Reel update
+        
+        const texturesSprites:Record<string, pixi.Texture> = {};
+        texturesSprites['hv1'] = textures[0];
+        texturesSprites['hv2'] = textures[1];
+        texturesSprites['hv3'] = textures[2];
+        texturesSprites['hv4'] = textures[3];
+
+        texturesSprites['lv1'] = textures[4];
+        texturesSprites['lv2'] = textures[5];
+        texturesSprites['lv3'] = textures[6];
+        texturesSprites['lv4'] = textures[7];
+
+        // #endregion
+
         // #region Button
         const buttonTexture = textures[textures.length-1];
         const buttonSprite = new pixi.Sprite(buttonTexture);
