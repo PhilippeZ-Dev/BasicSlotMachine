@@ -1,5 +1,6 @@
 import * as pixi from 'pixi.js';
 import { StartButton } from './StartButton';
+import { Game } from './Game';
 
 const width = 800;
 const height = 600;
@@ -23,16 +24,7 @@ const backgroundColor = "rgb(100, 100, 100)";
         container.y = 50;
         app.stage.addChild(container);
 
-        const band1 = ["hv2", "lv3", "lv3", "hv1", "hv1", "lv1", "hv1", "hv4", "lv1", "hv3", "hv2", "hv3", "lv4", "hv4", "lv1", "hv2", "lv4", "lv1", "lv3", "hv2"];
-        const band2 = ["hv1", "lv2", "lv3", "lv2", "lv1", "lv1", "lv4", "lv1", "lv1", "hv4", "lv3", "hv2", "lv1", "lv3", "hv1", "lv1", "lv2", "lv4", "lv3", "lv2"];
-        const band3 = ["lv1", "hv2", "lv3", "lv4", "hv3", "hv2", "lv2", "hv2", "hv2", "lv1", "hv3", "lv1", "hv1", "lv2", "hv3", "hv2", "hv4", "hv1", "lv2", "lv4"];
-        const band4 = ["hv2", "lv2", "hv3", "lv2", "lv4", "lv4", "hv3", "lv2", "lv4", "hv1", "lv1", "hv1", "lv2", "hv3", "lv2", "lv3", "hv2", "lv1", "hv3", "lv2"];
-        const band5 = ["lv3", "lv4", "hv2", "hv3", "hv4", "hv1", "hv3", "hv2", "hv2", "hv4", "hv4", "hv2", "lv2", "hv4", "hv1", "lv2", "hv1", "lv2", "hv4", "lv4"];
-
-        const bands = [band1, band2, band3, band4, band5];
-        const bandCount = 5;
-        let bandLength = band1.length;
-        let bandPositions = [0,0,0,0,0];
+        const game = new Game();
 
         // Button
         const buttonTexture = await pixi.Assets.load('assets/spin_button.png');
@@ -42,6 +34,9 @@ const backgroundColor = "rgb(100, 100, 100)";
         startButton.button.on('pointerdown', () =>
             {
                 startButton.OnClick();
+                game.RandomizeBands();
+                console.log(game.bandPositions);
+                console.log(game.gameResults);
             }
         );
         app.stage.addChild(startButton.button);
