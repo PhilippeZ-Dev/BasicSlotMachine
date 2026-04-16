@@ -35,7 +35,7 @@ const backgroundColor = "rgb(100, 100, 100)";
             }
         );
         loadingText.anchor.set(.5);
-        loadingText.x = width*.12;
+        loadingText.x = width*.1;
         loadingText.y = height*.1;
 
         app.stage.addChild(loadingText);
@@ -76,19 +76,16 @@ const backgroundColor = "rgb(100, 100, 100)";
             
             for(let j = 0; j < reel.sprites.length; j++)
             {
-                let sprite = reel.sprites[j];
-                sprite = new pixi.Sprite(textures[0]);
-                sprite.scale = .4;
-                sprite.x = reel.position_x;
-                sprite.y = reel.position_y + Reel.margin_y * j;
-                app.stage.addChild(sprite);
+                reel.sprites[j] = new pixi.Sprite();
+                reel.sprites[j].scale = .4;
+                reel.sprites[j].x = reel.position_x;
+                reel.sprites[j].y = reel.position_y + Reel.margin_y * j;
+                app.stage.addChild(reel.sprites[j]);
             }
-
         }
         // #endregion
 
-        // #region Reel update
-        
+        // #region Reel result link to assets
         const texturesSprites:Record<string, pixi.Texture> = {};
         texturesSprites['hv1'] = textures[0];
         texturesSprites['hv2'] = textures[1];
@@ -99,7 +96,6 @@ const backgroundColor = "rgb(100, 100, 100)";
         texturesSprites['lv2'] = textures[5];
         texturesSprites['lv3'] = textures[6];
         texturesSprites['lv4'] = textures[7];
-
         // #endregion
 
         // #region Button
@@ -111,9 +107,27 @@ const backgroundColor = "rgb(100, 100, 100)";
         startButton.button.on('pointerdown', () =>
             {
                 game.RandomizeBands();
-                console.log('band positions: ', game.bandPositions);
-                console.log('game results: ', game.gameResults);
+                //console.log('band positions: ', game.bandPositions);
+                //console.log('game results: ', game.gameResults);
                 text.text = game.gameResults;
+
+                //update display reels
+                for(let i = 0; i < reels.length; i++)
+                {
+                    for(let j = 0; j < reels[i].sprites.length; j++)
+                    {
+                        let band = game.bands[i];
+                        let resultID:number = game.bandPositions[i] + j;
+                        if(resultID >= band.length)
+                        {
+                            resultID -= band.length;
+                        }
+                        let result = band[resultID];
+                    
+                        let texture:pixi.Texture = texturesSprites[result];
+                        reels[i].sprites[j].texture = texture;
+                    }
+                }
             }
         );
         app.stage.addChild(startButton.button);
