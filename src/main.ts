@@ -1,7 +1,8 @@
 import * as pixi from 'pixi.js';
+import { AssetLoader } from './AssetLoader';
 import { StartButton } from './StartButton';
 import { Game } from './Game';
-import { AssetLoader } from './AssetLoader';
+import { PayTable } from './PayTable';
 import { Reel } from './Reel';
 
 const width = 1280;
@@ -53,12 +54,12 @@ const backgroundColor = "rgb(100, 100, 100)";
             'assets/lv4_symbol.png',
             'assets/spin_button.png'
         ]
-
         const textures:pixi.Texture[] = await AssetLoader.Load(assetPaths, loadingText);
         // #endregion
 
  ////////////////////////////////////////////////////       
         const game = new Game();
+        const paytable = new PayTable();
 
         // #region Reels Container
         const container = new pixi.Container();
