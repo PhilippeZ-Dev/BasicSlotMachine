@@ -33,6 +33,28 @@ export class Game
         return results;
     }
 
+    GetScreen():string[][]
+    {
+        let screen:string[][] = [];
+
+        for(let column = 0; column < this.bandCount; column++)
+        {
+            screen[column] = [];
+            for(let row = 0; row < 3; row++)
+            {
+                let resultID = this.bandPositions[column] + row;
+                if (resultID >= this.bandLength) 
+                    {
+                        resultID -= this.bandLength;
+                    }
+
+                screen[column][row] = this.bands[column][resultID];
+            }
+        }
+
+        return screen;
+    }
+
     constructor()
     {
         console.log('game created');

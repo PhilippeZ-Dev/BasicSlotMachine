@@ -5,8 +5,8 @@ import { AssetLoader } from './AssetLoader';
 import { Reel } from './Reel';
 
 const width = 1280;
-const height = 720
-0;
+const height = 720;
+
 const backgroundColor = "rgb(100, 100, 100)";
 
 (async()=> 
@@ -111,21 +111,15 @@ const backgroundColor = "rgb(100, 100, 100)";
                 //console.log('game results: ', game.gameResults);
                 text.text = game.gameResults;
 
+
+                const screen = game.GetScreen();
+                
                 //update display reels
                 for(let i = 0; i < reels.length; i++)
                 {
                     for(let j = 0; j < reels[i].sprites.length; j++)
                     {
-                        let band = game.bands[i];
-                        let resultID:number = game.bandPositions[i] + j;
-                        if(resultID >= band.length)
-                        {
-                            resultID -= band.length;
-                        }
-                        let result = band[resultID];
-                    
-                        let texture:pixi.Texture = texturesSprites[result];
-                        reels[i].sprites[j].texture = texture;
+                        reels[i].sprites[j].texture = texturesSprites[screen[i][j]];
                     }
                 }
             }
