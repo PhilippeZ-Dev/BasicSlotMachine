@@ -86,16 +86,17 @@ const backgroundColor = "rgb(100, 100, 100)";
         // #endregion
 
         // #region Reel result link to assets
-        const texturesSprites:Record<string, pixi.Texture> = {};
-        texturesSprites['hv1'] = textures[0];
-        texturesSprites['hv2'] = textures[1];
-        texturesSprites['hv3'] = textures[2];
-        texturesSprites['hv4'] = textures[3];
-
-        texturesSprites['lv1'] = textures[4];
-        texturesSprites['lv2'] = textures[5];
-        texturesSprites['lv3'] = textures[6];
-        texturesSprites['lv4'] = textures[7];
+        const texturesSprites:Record<string, pixi.Texture> = 
+        {
+            'hv1': textures[0],
+            'hv2': textures[1],
+            'hv3': textures[2],
+            'hv4': textures[3],
+            'lv1': textures[4],
+            'lv2': textures[5],
+            'lv3': textures[6],
+            'lv4': textures[7]
+        };
         // #endregion
 
         // #region Button
