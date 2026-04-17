@@ -136,8 +136,7 @@ app.stage.addChild(loadingText);
         startButton.button.on('pointerdown', () =>
         {
             /// Run game ///
-            //game.RandomizeBands();
-            game.bandPositions = [18,9,2,0,12];
+            game.RandomizeBands();
             
             const screen = game.GetScreen();
             
