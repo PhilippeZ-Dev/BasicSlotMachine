@@ -1,5 +1,6 @@
 export class Game
 {
+    // symbols for each column in the game
     band1 = ["hv2", "lv3", "lv3", "hv1", "hv1", "lv1", "hv1", "hv4", "lv1", "hv3", "hv2", "hv3", "lv4", "hv4", "lv1", "hv2", "lv4", "lv1", "lv3", "hv2"];
     band2 = ["hv1", "lv2", "lv3", "lv2", "lv1", "lv1", "lv4", "lv1", "lv1", "hv4", "lv3", "hv2", "lv1", "lv3", "hv1", "lv1", "lv2", "lv4", "lv3", "lv2"];
     band3 = ["lv1", "hv2", "lv3", "lv4", "hv3", "hv2", "lv2", "hv2", "hv2", "lv1", "hv3", "lv1", "hv1", "lv2", "hv3", "hv2", "hv4", "hv1", "lv2", "lv4"];
@@ -9,12 +10,14 @@ export class Game
     bands = [this.band1, this.band2, this.band3, this.band4, this.band5];
     bandCount = 5;
     bandLength = this.band1.length;
+    // determins the state of each column
     bandPositions = [0,0,0,0,0];
     get gameResults ()
     {
         return this.GetResults();
     }
 
+    // randomize the state of each column
     RandomizeBands():void
     {
         for (let i = 0; i < this.bandPositions.length; i++) 
@@ -23,6 +26,8 @@ export class Game
         }
     }
 
+    // Get the symbols corresponding to each band state
+    // used for testing
     GetResults()
     {
         let results = [];
@@ -33,6 +38,7 @@ export class Game
         return results;
     }
 
+    // get the symbol for each column and row of the game
     GetScreen():string[][]
     {
         let screen:string[][] = [];
@@ -43,6 +49,7 @@ export class Game
             for(let row = 0; row < 3; row++)
             {
                 let resultID = this.bandPositions[column] + row;
+                // verufy that the band loops when the index goes out of bound
                 if (resultID >= this.bandLength) 
                     {
                         resultID -= this.bandLength;

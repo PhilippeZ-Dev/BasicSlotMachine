@@ -104,27 +104,30 @@ const backgroundColor = "rgb(100, 100, 100)";
         const buttonTexture = textures[textures.length-1];
         const buttonSprite = new pixi.Sprite(buttonTexture);
         const startButton = new StartButton(buttonSprite, width*0.5, height*0.75);
-        
+
         // Button Onclick
         startButton.button.on('pointerdown', () =>
             {
+                /// Run game ///
                 game.RandomizeBands();
-                //console.log('band positions: ', game.bandPositions);
-                //console.log('game results: ', game.gameResults);
-                text.text = game.gameResults;
-
-
                 const screen = game.GetScreen();
                 
                 //update display reels
                 for(let i = 0; i < reels.length; i++)
-                {
-                    for(let j = 0; j < reels[i].sprites.length; j++)
                     {
-                        reels[i].sprites[j].texture = texturesSprites[screen[i][j]];
+                        for(let j = 0; j < reels[i].sprites.length; j++)
+                            {
+                                reels[i].sprites[j].texture = texturesSprites[screen[i][j]];
+                            }
+                        }
+                        
+                        let results = paytable.Calculate(screen);
+                        console.log(results);
+                        let total = paytable.CalculateTotal(results);
+                        console.log('total payout: ', total);
+                        
+                        text.text = game.gameResults;
                     }
-                }
-            }
         );
         app.stage.addChild(startButton.button);
         // #endregion
