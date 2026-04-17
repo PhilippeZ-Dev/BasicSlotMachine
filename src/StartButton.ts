@@ -1,10 +1,11 @@
 import * as pixi from 'pixi.js';
+import { Values } from './Values';
 
 export class StartButton
 {
     button:pixi.Sprite;
 
-    constructor(sprite:pixi.Sprite, posX:number, posY:number)
+    constructor(sprite:pixi.Sprite)
     {
         // pass in the sprite created in and added to the scene in main
         this.button = sprite;
@@ -21,7 +22,7 @@ export class StartButton
 
     UpdatePosition()
     {
-        this.button.x = window.innerWidth*.5;
-        this.button.y = window.innerHeight*.65;
+        this.button.x = window.innerWidth * Values.START_BTN_X_ANCHOR;
+        this.button.y = window.innerHeight * Values.START_BTN_Y_ANCHOR;
     }
 }
