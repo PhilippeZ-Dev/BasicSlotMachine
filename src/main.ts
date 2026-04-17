@@ -5,7 +5,7 @@ import { Game } from './Game';
 import { Result } from './PayTable';
 import { PayTable } from './PayTable';
 import { Reel } from './Reel';
-
+import { ScreenElements } from './ScreenElements';
 import { Values } from './Values';
 
 let width = window.innerWidth;
@@ -16,43 +16,14 @@ const backgroundColor = Values.BACKGROUND_COLOR;
 let app:pixi.Application = new pixi.Application();;
 let startButton:StartButton;
 
-let container:pixi.Container = new pixi.Container();
-container.x = width * Values.CONTAINER_X_ANCHOR;
-container.y = height * Values.CONTAINER_Y_ANCHOR;
-//app.stage.addChild(container);
+let container:pixi.Container = ScreenElements.CreateContainer(width, height, Values.CONTAINER_X_ANCHOR, Values.CONTAINER_Y_ANCHOR);
+let text:pixi.Text = ScreenElements.CreateText('Total wins:', width, height,  Values.TEXT_X_ANCHOR, Values.TEXT_Y_ANCHOR, 40);
+let loadingText:pixi.Text =  ScreenElements.CreateText('0%', width, height, Values.LOADING_X_ANCHOR, Values.LOADING_Y_ANCHOR, 60);
 
-// #region Texts
-let text:pixi.Text;
-text = new pixi.Text(
-{
-    text: 'Total wins:',
-    style: 
-    {
-        fill: "rgb(0,0,0)",
-        fontSize: 40
-    } 
-});
-text.anchor.set(.5);
-text.x = width * Values.TEXT_X_ANCHOR;
-text.y = height * Values.TEXT_Y_ANCHOR;
-//app.stage.addChild(text);
+const reels:Reel[] = ScreenElements.CreateReels(container, Values.REEL_X_MARGIN, Values.REEL_Y_MARGIN, Values.REEL_SCALE);
 
-let loadingText = new pixi.Text(
-{
-    text: '0%',
-    style: 
-    {
-        fill: "rgb(0,0,0)",
-        fontSize: 60
-    }
-});
-loadingText.anchor.set(.5);
-loadingText.x = width * Values.LOADING_X_ANCHOR;
-loadingText.y = height * Values.LOADING_Y_ANCHOR;
-//app.stage.addChild(loadingText);
-
-// #endregion
-
+const game = new Game();
+const paytable = new PayTable();
 (async()=> 
     {
         // #region Initialize app
@@ -65,7 +36,6 @@ loadingText.y = height * Values.LOADING_Y_ANCHOR;
         document.body.appendChild(app.canvas);
         // #endregion
 
-        // #region asset loading
         // list of assets
         const assetPaths:string[] = 
         [
@@ -80,7 +50,7 @@ loadingText.y = height * Values.LOADING_Y_ANCHOR;
             'assets/spin_button.png'
         ]
         const textures:pixi.Texture[] = await AssetLoader.Load(assetPaths, loadingText);
-        // #region Reel result link to assets
+
         const texturesSprites:Record<string, pixi.Texture> = 
         {
             'hv1': textures[0],
@@ -95,40 +65,13 @@ loadingText.y = height * Values.LOADING_Y_ANCHOR;
         const buttonTexture = textures[textures.length-1];
         const buttonSprite = new pixi.Sprite(buttonTexture);
         startButton = new StartButton(buttonSprite);
-        // #endregion
         
         // Added a delay to keep the text around longer, the assets load too quickly
         setTimeout(() => 
-            {
-                app.stage.removeChild(loadingText);
-            }, Values.LOADING_TEXT_DELAY);
-
-        // #endregion
- 
-        const game = new Game();
-        const paytable = new PayTable();
-
-        // #region Reels
-        const reels:Reel[] = [];
-        let reelCount = 5;
-        for(let i = 0; i < reelCount; i++) 
         {
-            let reel = new Reel((container.x + Values.REEL_X_MARGIN * (i-2)), (container.y));
-            reels.push(reel);
-            
-            for(let j = 0; j < reel.sprites.length; j++)
-            {
-                reel.sprites[j] = new pixi.Sprite();
-                reel.sprites[j].anchor = .5;
-                reel.sprites[j].scale = Values.REEL_SCALE;
-                reel.sprites[j].x = reel.position_x;
-                reel.sprites[j].y = reel.position_y + Values.REEL_Y_MARGIN * j;
-                app.stage.addChild(reel.sprites[j]);
-            }
-        }
-        // #endregion
+            app.stage.removeChild(loadingText);
+        }, Values.LOADING_TEXT_DELAY);
 
-        // #region Button
         AddElementsToScreen();
         // Button Onclick
         startButton.button.on('pointerdown', () =>
@@ -161,11 +104,9 @@ loadingText.y = height * Values.LOADING_Y_ANCHOR;
             }
             
             text.text = resultText;
-        });
-        // #endregion        
+        });      
     }
-)
-();
+)();
 
 window.addEventListener('resize', Resize);
 function Resize():void
@@ -193,4 +134,14 @@ function AddElementsToScreen():void
     app.stage.addChild(text);
     app.stage.addChild(loadingText);
     app.stage.addChild(startButton.button);
+
+    for(let i = 0; i < reels.length; i++) 
+    {
+        let reel = reels[i];
+        for(let j = 0; j < reel.sprites.length; j++)
+        {
+        
+            app.stage.addChild(reel.sprites[j]);
+        }
+    }
 }
