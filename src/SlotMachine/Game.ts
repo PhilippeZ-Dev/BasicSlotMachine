@@ -1,4 +1,4 @@
-import { Values } from "./Values";
+import { Values } from "../Utils/Values";
 
 export class Game
 {

@@ -1,5 +1,5 @@
 import * as pixi from 'pixi.js';
-import { Reel } from './Reel';
+import { Reel } from '../SlotMachine/Reel';
 
 export class ScreenElements
 {

@@ -1,5 +1,5 @@
-import { PayTable } from './PayTable';
-import { Game } from './Game';
+import { PayTable } from '../SlotMachine/PayTable';
+import { Game } from '../SlotMachine/Game';
 
 describe('PayTable.Calculate', () => 
 {

@@ -1,5 +1,5 @@
 import * as pixi from 'pixi.js';
-import { Values } from './Values';
+import { Values } from '../Utils/Values';
 
 export class StartButton
 {

@@ -1,12 +1,12 @@
 import * as pixi from 'pixi.js';
-import { AssetLoader } from './AssetLoader';
-import { StartButton } from './StartButton';
-import { Game } from './Game';
-import { Result } from './PayTable';
-import { PayTable } from './PayTable';
-import { Reel } from './Reel';
-import { ScreenElements } from './ScreenElements';
-import { Values } from './Values';
+import { AssetLoader } from './Utils/AssetLoader';
+import { StartButton } from './UI/StartButton';
+import { Game } from './SlotMachine/Game';
+import { Result } from './SlotMachine/PayTable';
+import { PayTable } from './SlotMachine/PayTable';
+import { Reel } from './SlotMachine/Reel';
+import { ScreenElements } from './UI/ScreenElements';
+import { Values } from './Utils/Values';
 
 let width = window.innerWidth;
 let height = window.innerHeight;
