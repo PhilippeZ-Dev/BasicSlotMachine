@@ -2,6 +2,7 @@ import * as pixi from 'pixi.js';
 import { AssetLoader } from './AssetLoader';
 import { StartButton } from './StartButton';
 import { Game } from './Game';
+import { Result } from './PayTable';
 import { PayTable } from './PayTable';
 import { Reel } from './Reel';
 
@@ -63,8 +64,8 @@ const backgroundColor = "rgb(100, 100, 100)";
 
         // #region Reels Container
         const container = new pixi.Container();
-        container.x = 250;
-        container.y = 100;
+        container.x = width*.2;
+        container.y = height*.075;
         
         app.stage.addChild(container);
 
@@ -103,32 +104,51 @@ const backgroundColor = "rgb(100, 100, 100)";
         // #region Button
         const buttonTexture = textures[textures.length-1];
         const buttonSprite = new pixi.Sprite(buttonTexture);
-        const startButton = new StartButton(buttonSprite, width*0.5, height*0.75);
+        const startButton = new StartButton(buttonSprite, width*0.5, height*0.65);
 
         // Button Onclick
         startButton.button.on('pointerdown', () =>
+        {
+            /// Run game ///
+            /*
+            game.bandPositions = [0, 11, 1, 10, 14]; // works
+            game.bandPositions = [0, 0, 0, 0, 0]; // works
+            game.bandPositions = [5, 14, 9, 9, 16]; // faulty ???, payline 7 doesnt fit here, only payline 6 applies
+            game.bandPositions = [1, 16, 2, 15, 0]; // works
+            game.bandPositions = [18, 9, 2, 0, 12]; // works
+            */
+            game.RandomizeBands();
+            
+            const screen = game.GetScreen();
+            
+            //update display reels
+            for(let i = 0; i < reels.length; i++)
             {
-                /// Run game ///
-                game.RandomizeBands();
-                const screen = game.GetScreen();
-                
-                //update display reels
-                for(let i = 0; i < reels.length; i++)
-                    {
-                        for(let j = 0; j < reels[i].sprites.length; j++)
-                            {
-                                reels[i].sprites[j].texture = texturesSprites[screen[i][j]];
-                            }
-                        }
-                        
-                        let results = paytable.Calculate(screen);
-                        console.log(results);
-                        let total = paytable.CalculateTotal(results);
-                        console.log('total payout: ', total);
-                        
-                        text.text = game.gameResults;
-                    }
-        );
+                for(let j = 0; j < reels[i].sprites.length; j++)
+                {
+                    reels[i].sprites[j].texture = texturesSprites[screen[i][j]];
+                }
+            }
+                    
+            let results = paytable.Calculate(screen);
+            console.log(results);
+            let total = paytable.CalculateTotal(results);
+            console.log('total payout: ', total);
+            
+            // update text
+            let resultText:string = '';
+            resultText += `Total wins: ${total} \n`;
+            
+            for(let i = 0; i < results.length; i++)
+            {
+                let res:Result = results[i];
+                resultText += `payline ${res.payLineID}, ${res.symbolID} x${res.length}, ${res.payout}\n`;
+            }
+            
+            console.log(resultText);
+            text.text = resultText;
+        });
+
         app.stage.addChild(startButton.button);
         // #endregion
 

@@ -1,6 +1,6 @@
 // types works like structs
 // used to wrap all the data that represent a win 
-type Result = 
+export type Result = 
 {
     payLineID:number; // which pay line according to the index in the given
     symbolID:string; // which symbol won in that result
@@ -59,7 +59,7 @@ export class PayTable
                     break; // no match, stop, matches must start from the fisrt column 
                 }
             }
-            
+
             if(count >= 3)
             {
                 let payout = this.payTable[current][count - 3];
