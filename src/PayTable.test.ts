@@ -30,19 +30,6 @@ describe('PayTable.Calculate', () =>
     });
 
     ///
-/*
-    test('Positions: 5, 14, 9, 9, 16: -payline 6, lv1 x4, 5 -payline 7, lv1 x3, 2', () => 
-    {
-        game.bandPositions = [5, 14, 9, 9, 16];
-        const screen =  game.GetScreen();
-        const results = paytable.Calculate(screen);
-        expect(results).toHaveLength(1);
-        expect(results[0]).toMatchObject({ payLineID: 6, symbolID: 'lv1', length: 4, payout: 5});
-        //expect(results[1]).toMatchObject({ payLineID: 7, symbolID: 'lv1', length: 3, payout: 2});
-    });
-*/
-
-    ///
 
     test('Positions: 1, 16, 2, 15, 0: no results', () => 
     {

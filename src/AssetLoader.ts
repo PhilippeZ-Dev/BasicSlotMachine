@@ -13,7 +13,7 @@ export class AssetLoader
             const texture = await pixi.Assets.load(assetlist[i]);
             assets.push(texture);
             const percent = Math.round(((i + 1) / assetlist.length) * 100);
-            text.text = `${percent}%`;
+            text.text = `Loading: ${percent}%`;
         }
         return assets
     }

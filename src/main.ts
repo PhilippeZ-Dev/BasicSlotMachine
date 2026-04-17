@@ -136,14 +136,8 @@ app.stage.addChild(loadingText);
         startButton.button.on('pointerdown', () =>
         {
             /// Run game ///
-            /*
-            game.bandPositions = [0, 11, 1, 10, 14]; // works
-            game.bandPositions = [0, 0, 0, 0, 0]; // works
-            game.bandPositions = [5, 14, 9, 9, 16]; // faulty ???, payline 7 doesnt fit here, only payline 6 applies
-            game.bandPositions = [1, 16, 2, 15, 0]; // works
-            game.bandPositions = [18, 9, 2, 0, 12]; // works
-            */
-            game.RandomizeBands();
+            //game.RandomizeBands();
+            game.bandPositions = [18,9,2,0,12];
             
             const screen = game.GetScreen();
             
