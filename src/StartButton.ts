@@ -16,7 +16,12 @@ export class StartButton
 
         this.button.anchor.set(0.5);
         this.button.scale = 0.5;
-        this.button.x = posX;
-        this.button.y = posY;
+        this.UpdatePosition();
+    }
+
+    UpdatePosition()
+    {
+        this.button.x = window.innerWidth*.5;
+        this.button.y = window.innerHeight*.65;
     }
 }

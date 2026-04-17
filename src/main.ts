@@ -6,19 +6,23 @@ import { Result } from './PayTable';
 import { PayTable } from './PayTable';
 import { Reel } from './Reel';
 
-const width = 1280;
-const height = 720;
+let width = window.innerWidth;
+let height = window.innerHeight;
 
 const backgroundColor = "rgb(100, 100, 100)";
+
+let app:pixi.Application;
+let startButton:StartButton;
+let container:pixi.Container;
+let text:pixi.Text;
 
 (async()=> 
     {
         // #region Initialize app
-        const app = new pixi.Application();
+        app = new pixi.Application();
         await app.init(
             {
-                width: width, 
-                height: height, 
+                resizeTo: window,
                 background: backgroundColor
             }
         );
@@ -63,9 +67,9 @@ const backgroundColor = "rgb(100, 100, 100)";
         const paytable = new PayTable();
 
         // #region Reels Container
-        const container = new pixi.Container();
-        container.x = width*.2;
-        container.y = height*.075;
+        container = new pixi.Container();
+        container.x = width*.5;
+        container.y = height*.15;
         
         app.stage.addChild(container);
 
@@ -73,12 +77,13 @@ const backgroundColor = "rgb(100, 100, 100)";
         let reelCount = 5;
         for(let i = 0; i < reelCount; i++) 
         {
-            let reel = new Reel((container.x + Reel.margin_x * i), (container.y));
+            let reel = new Reel((container.x + Reel.margin_x * (i-2)), (container.y));
             reels.push(reel);
             
             for(let j = 0; j < reel.sprites.length; j++)
             {
                 reel.sprites[j] = new pixi.Sprite();
+                reel.sprites[j].anchor = .5;
                 reel.sprites[j].scale = .4;
                 reel.sprites[j].x = reel.position_x;
                 reel.sprites[j].y = reel.position_y + Reel.margin_y * j;
@@ -104,7 +109,7 @@ const backgroundColor = "rgb(100, 100, 100)";
         // #region Button
         const buttonTexture = textures[textures.length-1];
         const buttonSprite = new pixi.Sprite(buttonTexture);
-        const startButton = new StartButton(buttonSprite, width*0.5, height*0.65);
+        startButton = new StartButton(buttonSprite, width*0.5, height*0.65);
 
         // Button Onclick
         startButton.button.on('pointerdown', () =>
@@ -153,7 +158,7 @@ const backgroundColor = "rgb(100, 100, 100)";
         // #endregion
 
         // #region Result Text
-        const text = new pixi.Text(
+        text = new pixi.Text(
             {
                 text: '_',
                 style: 
@@ -172,3 +177,21 @@ const backgroundColor = "rgb(100, 100, 100)";
     }
 )
 ();
+
+window.addEventListener('resize', Resize);
+
+function Resize()
+{
+    width = window.innerWidth;
+    height = window.innerHeight;
+
+    app.renderer.resize(width, height);
+    
+    startButton.UpdatePosition();
+
+    container.x = width*.5;
+    container.y = height*.15;
+
+    text.x = width*.5;
+    text.y = height*.9;
+}
