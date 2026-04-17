@@ -91,6 +91,6 @@ export class PayTable
 
     constructor()
     {
-        console.log('paytable created');
+        
     }
 }
