@@ -19,7 +19,7 @@ let startButton:StartButton;
 let container:pixi.Container = new pixi.Container();
 container.x = width * Values.CONTAINER_X_ANCHOR;
 container.y = height * Values.CONTAINER_Y_ANCHOR;
-app.stage.addChild(container);
+//app.stage.addChild(container);
 
 // #region Texts
 let text:pixi.Text;
@@ -35,7 +35,7 @@ text = new pixi.Text(
 text.anchor.set(.5);
 text.x = width * Values.TEXT_X_ANCHOR;
 text.y = height * Values.TEXT_Y_ANCHOR;
-app.stage.addChild(text);
+//app.stage.addChild(text);
 
 let loadingText = new pixi.Text(
 {
@@ -49,7 +49,7 @@ let loadingText = new pixi.Text(
 loadingText.anchor.set(.5);
 loadingText.x = width * Values.LOADING_X_ANCHOR;
 loadingText.y = height * Values.LOADING_Y_ANCHOR;
-app.stage.addChild(loadingText);
+//app.stage.addChild(loadingText);
 
 // #endregion
 
@@ -80,13 +80,29 @@ app.stage.addChild(loadingText);
             'assets/spin_button.png'
         ]
         const textures:pixi.Texture[] = await AssetLoader.Load(assetPaths, loadingText);
+        // #region Reel result link to assets
+        const texturesSprites:Record<string, pixi.Texture> = 
+        {
+            'hv1': textures[0],
+            'hv2': textures[1],
+            'hv3': textures[2],
+            'hv4': textures[3],
+            'lv1': textures[4],
+            'lv2': textures[5],
+            'lv3': textures[6],
+            'lv4': textures[7]
+        };
+        const buttonTexture = textures[textures.length-1];
+        const buttonSprite = new pixi.Sprite(buttonTexture);
+        startButton = new StartButton(buttonSprite);
+        // #endregion
         
         // Added a delay to keep the text around longer, the assets load too quickly
         setTimeout(() => 
             {
                 app.stage.removeChild(loadingText);
             }, Values.LOADING_TEXT_DELAY);
-        
+
         // #endregion
  
         const game = new Game();
@@ -112,26 +128,8 @@ app.stage.addChild(loadingText);
         }
         // #endregion
 
-        // #region Reel result link to assets
-        const texturesSprites:Record<string, pixi.Texture> = 
-        {
-            'hv1': textures[0],
-            'hv2': textures[1],
-            'hv3': textures[2],
-            'hv4': textures[3],
-            'lv1': textures[4],
-            'lv2': textures[5],
-            'lv3': textures[6],
-            'lv4': textures[7]
-        };
-        // #endregion
-
         // #region Button
-        const buttonTexture = textures[textures.length-1];
-        const buttonSprite = new pixi.Sprite(buttonTexture);
-        startButton = new StartButton(buttonSprite);
-        app.stage.addChild(startButton.button);
-
+        AddElementsToScreen();
         // Button Onclick
         startButton.button.on('pointerdown', () =>
         {
@@ -170,7 +168,7 @@ app.stage.addChild(loadingText);
 ();
 
 window.addEventListener('resize', Resize);
-function Resize()
+function Resize():void
 {
     width = window.innerWidth;
     height = window.innerHeight;
@@ -187,4 +185,12 @@ function Resize()
 
     loadingText.x = width * Values.LOADING_X_ANCHOR;
     loadingText.y = height * Values.LOADING_Y_ANCHOR;
+}
+
+function AddElementsToScreen():void
+{
+    app.stage.addChild(container);
+    app.stage.addChild(text);
+    app.stage.addChild(loadingText);
+    app.stage.addChild(startButton.button);
 }
