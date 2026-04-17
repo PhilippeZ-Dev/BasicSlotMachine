@@ -1,23 +1,36 @@
 {
   "name": "basicslotmachine",
   "version": "1.0.0",
-
-  "scripts": {
-    "dev": "vite"
+  "scripts": 
+  {
+    "dev": "vite",
+    "test" : "jest"
   },
 
-  "repository": {
+  "repository": 
+  {
     "type": "git",
     "url": "git+https://github.com/PhilippeZ-Dev/BasicSlotMachine.git"
   },
-  
+
   "type": "module",
-  "dependencies": {
+  "dependencies": 
+  {
     "pixi.js": "^8.18.0"
   },
 
-  "devDependencies": {
+  "devDependencies": 
+  {
+    "@types/jest": "^30.0.0",
+    "jest": "^30.3.0",
+    "ts-jest": "^29.4.9",
     "typescript": "^6.0.2",
     "vite": "^8.0.8"
+  },
+
+  "jest":
+  {
+    "preset": "ts-jest",
+    "testEnvironment": "node"
   }
 }

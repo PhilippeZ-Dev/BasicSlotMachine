@@ -64,6 +64,6 @@ export class Game
 
     constructor()
     {
-        console.log('game created');
+        
     }
 }
