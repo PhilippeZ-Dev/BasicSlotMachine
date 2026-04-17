@@ -58,20 +58,20 @@ export class PayTable
                 {
                     break; // no match, stop, matches must start from the fisrt column 
                 }
-
-                if(count >= 3)
-                {
-                    let payout = this.payTable[current][count - 3];
-                    results.push
-                    (
-                        {
-                            payLineID: p + 1, // +1 becuase in the exercise the payLines are numbered 1 to 7
-                            symbolID: current,
-                            length: count,
-                            payout: payout
-                        }
-                    )
-                }
+            }
+            
+            if(count >= 3)
+            {
+                let payout = this.payTable[current][count - 3];
+                results.push
+                (
+                    {
+                        payLineID: p + 1, // +1 becuase in the exercise the payLines are numbered 1 to 7
+                        symbolID: current,
+                        length: count,
+                        payout: payout
+                    }
+                )
             }
         }
         return results;
